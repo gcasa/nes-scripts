@@ -1,0 +1,38 @@
+#!/bin/sh
+
+##
+# PER TSCHAK
+# * take the NES file
+# * strip off first 16 bytes
+# * last 8192 bytes are CHR ROM
+# * the remaining 32768 bytes are PRG ROM
+# * split PRG file into 16384 byte chunks using split -b16384 and copy into place
+# * put the CHR into one of the empty banks at the end (look for empty16.prg incbins), and pad out to 16384 bytes (there is a blank8k file that you can cat onto the end to do that. 
+# after that, the binary is in the cartridge, you can then do what you need to do to get it done.
+##
+
+FILE=$1
+base=`basename ${FILE} .nes`
+
+echo "Stripping ${FILE}..."
+
+# New files....
+outfile=${base}.out
+prgfile=${base}.prg
+chrfile=${base}.chr
+
+# Strip...
+echo "Skipping first 16 bytes -- Remove header"
+dd if=${FILE} bs=1 skip=16 of=${outfile}
+
+echo "Grab the PRG section -- Get the actual application"
+dd if=${outfile} bs=1 count=32768 of=${prgfile}
+
+echo "Grab the CHR section -- Get the tiles, etc..."
+dd if=${outfile} bs=1 skip=32768 count=8192 of=${chrfile}
+
+echo "Remove temp files"
+rm -rf ${outfile}
+
+echo "Complete."
+exit 0
