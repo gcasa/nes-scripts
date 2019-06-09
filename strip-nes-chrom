@@ -31,5 +31,8 @@ dd if=${outfile} bs=1 count=32768 of=${prgfile}
 echo "Grab the CHR section -- Get the tiles, etc..."
 dd if=${outfile} bs=1 skip=32768 count=8192 of=${chrfile}
 
+echo "Remove temp files"
+rm -rf ${outfile}
+
 echo "Complete."
 exit 0
