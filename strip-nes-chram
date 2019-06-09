@@ -24,8 +24,8 @@ echo "Stripping ${FILE}..."
 
 # New files....
 outfile=${base}.out
-prgfile=${base}.prg1
-prg2file=${base}.prg2
+prgfile=${base}-00.prg
+prg2file=${base}-01.chr
 
 # Strip...
 echo "Skipping first 16 bytes -- Remove header"

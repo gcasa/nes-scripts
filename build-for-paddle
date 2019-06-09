@@ -1,0 +1,15 @@
+#!/bin/sh
+
+echo "Building and copying for paddle menu..."
+FILES="circatari offthewall pong superbreakout"
+for i in ${FILES}
+do
+	cd ${i}
+	make clean
+	make
+	../nes-scripts/strip-nes-chram ${i}.nes
+	cp *.prg ../blaze-menu-paddle/romdata
+	cp *.chr ../blaze-menu-paddle/romdata
+	cd ..
+done
+echo "Done..." 
