@@ -1,0 +1,13 @@
+#!/bin/sh
+
+echo "Building and copying for release..."
+FILES="asteroids breakout centipede circatari offthewall pong superbreakout"
+for i in ${FILES}
+do
+	cd ${i}
+	make clean
+	make
+	cp *.nes ~/Desktop
+	cd ..
+done
+echo "Done..." 
